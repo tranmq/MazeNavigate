@@ -1,5 +1,5 @@
 # MazeNavigate
-The C# solution to finding the shortest path through a defined  maze from the entrance to the exit.
+The C# solution to finding the shortest path through a defined  maze from the ENTRANCE to the EXIT.
 
 The maze is defined as a matrix/2D array with 0s representing paths and 1s representing blocks.
 
