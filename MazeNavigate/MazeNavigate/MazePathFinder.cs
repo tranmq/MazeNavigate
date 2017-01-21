@@ -19,8 +19,8 @@ namespace MazeNavigate
         {
             if (maze == null || 
                 MazeHasNoDimensions(maze) || 
-                !IsIndexOfPath(entrance.Row, entrance.Col, maze) ||
-                !IsIndexOfPath(exit.Row, exit.Col, maze)
+                !IsValidPathNode((int) entrance.Row, (int) entrance.Col, maze) ||
+                !IsValidPathNode((int) exit.Row, (int) exit.Col, maze)
                )
             {
                 return new List<Index>(0);
@@ -39,8 +39,8 @@ namespace MazeNavigate
                     return ConstructPath(currentNode);
                 }
                 visitedNodes[currentNode.MazeIndex] = currentNode; // Add it to the collection of visited nodes.
-
-                foreach (var neighbor in GetNeighboringPathNodesOf(currentNode, maze))
+                IEnumerable<Node> neighboringNodes = GetNeighboringPathNodesOf(currentNode, maze);
+                foreach (var neighbor in neighboringNodes)
                 {
                     if (visitedNodes.ContainsKey(neighbor.MazeIndex))
                     {
@@ -85,9 +85,12 @@ namespace MazeNavigate
             var result = new List<Node>(4);
             foreach (var indexOffset in indexOffsets)
             {
-                if (IsValidPathNode(indexOffset.Row, indexOffset.Col, maze))
+                var row = (int) (currentNode.MazeIndex.Row + indexOffset.Row);
+                var col = (int) (currentNode.MazeIndex.Col + indexOffset.Col);
+
+                if (IsValidPathNode(row, col, maze))
                 {
-                    var neighboringPathNode = new Node(new Index((uint) (currentNode.MazeIndex.Row + indexOffset.Row), (uint) (currentNode.MazeIndex.Col + indexOffset.Col)));
+                    var neighboringPathNode = new Node(new Index((uint) row, (uint) col));
                     result.Add(neighboringPathNode);
                 }
             }
