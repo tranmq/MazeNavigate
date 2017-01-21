@@ -104,6 +104,29 @@ namespace MazeNavigate.Tests
         }
 
         [TestMethod]
+        public void FindPath_WhenEntranceAndExitAreSame_ShouldReturnTheOneItemPath()
+        {
+            var entrance = new Index(0, 0);
+            var exit = new Index(0, 0);
+            var maze = new uint[,]
+                       {
+                           {0,0,0,0,0},
+                           {0,1,1,1,1},
+                           {0,1,0,0,1},
+                           {0,1,1,0,1},
+                           {0,0,0,0,1}
+                       };
+
+            var expectedPath = new List<Index>
+                               {
+                                   new Index(0, 0)
+                               };
+            List<Index> actualPath = _pathFinder.FindPath(maze, entrance, exit);
+
+            CollectionAssert.AreEqual(expectedPath, actualPath);
+        }
+
+        [TestMethod]
         public void FindPath_WhenMazeIsOneStraightHorizonLine_ShouldSucceed()
         {
             var entrance = new Index(0, 0);
