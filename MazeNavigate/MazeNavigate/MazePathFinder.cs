@@ -26,8 +26,8 @@ namespace MazeNavigate
                 return new List<Index>(0);
             }
 
+            var visitedNodes = new HashSet<Index>();
             int mazeSize = maze.GetLength(0) * maze.GetLength(1);
-            var visitedNodes = new Dictionary<Index, Node>(mazeSize);
             var track = new Queue<Node>(mazeSize);
             track.Enqueue(new Node(entrance));
 
@@ -38,11 +38,11 @@ namespace MazeNavigate
                 {
                     return ConstructPath(currentNode);
                 }
-                visitedNodes[currentNode.MazeIndex] = currentNode; // Add it to the collection of visited nodes.
+                visitedNodes.Add(currentNode.MazeIndex);
                 IEnumerable<Node> neighboringNodes = GetNeighboringPathNodesOf(currentNode, maze);
                 foreach (var neighbor in neighboringNodes)
                 {
-                    if (visitedNodes.ContainsKey(neighbor.MazeIndex))
+                    if (visitedNodes.Contains(neighbor.MazeIndex))
                     {
                         continue;
                     }
