@@ -45,4 +45,10 @@ If there are multiple choices, the list of the shortest path is returned.
 
 If there is no path from the **ENTRANCE** to the **EXIT**, the empty list is returned.
 
+## The Implementation
 
+The class that implements the algorithm is the `MazePathFinder` class which implements the `IMazePathFinder` interface.  There is only 1 public function in the class, the `List<Index> FindPath(uint[,] maze, Index entrance, Index exit)`.  The `MazePathFinderUnitTests` is a good place to find out how to use the function.
+
+Intuitively, I would want to read the matrix representation of the maze, import the paths (elements with 0s as values) into some data structure then perform BFS on it.  But if the maze is large, say 1000x1000, and there are only 10 0-elements, it'll be a waste scanning the large amount of 1-elements in the array.  So I decided to perform BFS on discovery starting from the **ENTRANCE**.  Hence, the `Node` class and the `HashSet` of `Node` objects to track visited elements in the array.  The `Path` property of the `Node` class is only for backtracking to build the path from the **ENTRANCE** to the **EXIT**.
+
+For unit testing, I usually use [NUnit](https://www.nunit.org/ "NUnit").  But I use MSTest here because it serves me well for all the test cases I wanted to write.  No need to reference NUnit NuGet package.
